@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<!--{{success_detail}}-->
+welcome
+<!--<div id='monitor_4' style="margin-top: 2%;">-->
+    <!--<h6 align=middle style="font-size:18px"><b style="color: #FF4136">授信</b>详情</h6>-->
+    <!--<table border="1" width="100%" style="margin-bottom: 20px;">-->
+
+        <!--<tr align="center" style="font-size: 18px;color:#FFFFFF;background-color: #0044cc">-->
+            <!--<th style="text-align:center">序号</th>-->
+            <!--<th style="text-align:center">用户ID</th>-->
+            <!--<th style="text-align:center">分值</th>-->
+            <!--<th style="text-align:center">等级</th>-->
+            <!--<th style="text-align:center">授信额度</th>-->
+            <!--<th style="text-align:center">授信项标识</th>-->
+
+        <!--</tr>-->
+        <!--{% for item in success_detail %}-->
+        <!--<tr>-->
+            <!--<td align="middle">{{ loop.index }}</td>-->
+            <!--<td align="middle">{{ item['score'] }}</td>-->
+            <!--<td align="middle">{{ item['credit_grade'] }}</td>-->
+            <!--<td align="middle">{{ item['suggest_credit_amount'] }}</td>-->
+            <!--<td align="middle">{{ item['state'] }}</td>-->
+
+
+        <!--</tr>-->
+        <!--{% endfor %}-->
+    <!--</table>-->
+<!--</div>-->
+
+
+
+<div id='monitor_5' style="margin-top: 2%;">
+    <h6 align=middle style="font-size:18px"><b style="color: #FF4136">指标</b>详情</h6>
+    <table border="1" width="100%" style="margin-bottom: 20px;">
+
+        <tr align="center" style="font-size: 18px;color:#FFFFFF;background-color: #0044cc">
+            <th style="text-align:center">序号</th>
+            <th style="text-align:center">注册时长</th>
+            <th style="text-align:center">注册资金</th>
+            <th style="text-align:center">法人年龄</th>
+            <th style="text-align:center">对外投资</th>
+            <th style="text-align:center">交易</th>
+            <th style="text-align:center">规则</th>
+
+        </tr>
+        {% for item in success_detail %}
+        <tr>
+            <td align="middle">{{ loop.index }}</td>
+            <td align="middle">{{ item[1].get('reg_date', 0) }}</td>
+            <td align="middle">{{ item[1].get('reg_capital', 0) }}</td>
+            <td align="middle">{{ item[1].get('legal_age', 0) }}</td>
+            <td align="middle">{{ item[1].get('trade', '') }}</td>
+            <td align="middle">{{ item.get('rules', '') }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+</body>
+</html>

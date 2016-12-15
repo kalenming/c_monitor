@@ -1,0 +1,145 @@
+{% extends "layout/layout.html" %}
+{% block tools %}
+{% include 'tools/timeControllerMonitor.html' %}
+{% endblock %}
+
+{% block body %}
+
+
+
+
+
+<div id= 'month_amount_tend' style ="width: 1200px;height:400px"></div>
+<script>
+    //基于准备好的dom,初始化echarts实例
+    var chart_ins = echarts.init(document.getElementById('month_amount_tend'));
+    var option ={
+        title:{text:'月逾期额度趋势'},
+        tooltip:{},
+        legend: { data:['逾期未还'] },
+        xAxis: {
+        name:'月份',
+        data: {{ month_data|safe }}['months']
+        },
+        yAxis: {
+        'name':'金额（元）'},
+        series: [
+            {
+                name:'逾期未还',
+                type:'line',
+                data:{{ month_data|safe }}['overdue_amount']
+            }
+
+        ]
+    };
+    //使用刚才的option配置和实例显示图表
+    chart_ins.setOption(option);
+</script>
+
+
+<div id= 'month_count_tend' style ="width: 1200px;height:400px"></div>
+<script>
+    //基于准备好的dom,初始化echarts实例
+    var chart_ins = echarts.init(document.getElementById('month_count_tend'));
+    var option ={
+        title:{text:'按月统计逾期用户数'},
+        tooltip:{},
+        legend: { data:['逾期未还','逾期已还'] },
+        xAxis: {
+        name:'月份',
+        data: {{ month_data|safe }}['months']
+        },
+        yAxis: {
+        name:'用户数',},
+        series: [
+            {
+                name:'逾期未还',
+                type:'line',
+                data:{{ month_data|safe }}['unpay_count']
+            },
+            {
+                name:'逾期已还',
+                type:'line',
+                data:{{ month_data|safe }}['payed_count']
+            }
+
+        ]
+    };
+    //使用刚才的option配置和实例显示图表
+    chart_ins.setOption(option);
+</script>
+
+
+
+
+
+
+<div id= 'amount_dis' style ="width: 1200px;height:400px"></div>
+<script>
+    //基于准备好的dom,初始化echarts实例
+    var chart_ins = echarts.init(document.getElementById('amount_dis'));
+    var option ={
+        title:{text:'额度分布'},
+        tooltip:{},
+        legend: { data:['用户数'] },
+        xAxis: {
+        name:'额度（千元）',
+        data: ['[0-1)','[1-2)','[2-3)','[3-4)','[4-5)','5以上']
+        },
+        yAxis: {
+        name:'用户数'},
+        series: [
+            {
+                name:'用户数',
+                type:'bar',
+                data:{{ limit|safe }}['count']
+            }
+        ]
+    };
+    //使用刚才的option配置和实例显示图表
+    chart_ins.setOption(option);
+</script>
+
+
+
+
+
+<div id="unpay_payed_table" style="margin:60px;width:1100px;float:left">
+    <table border="2" width="1000px">
+        <tr style="font-size: 18px;color:#FFFFFF;background-color: #0044cc">
+            <th> 逾期未还/已还</th>
+            <th> 总金额</th>
+            <th>总数</th>
+            <th>均额</th>
+            <th>逾期/贷款 比</th>
+        </tr>
+
+        <tr>
+            <td>逾期未还</td>
+            <td>{{unpay_or_payed['unpay'][1]}}</td>
+            <td>{{ unpay_or_payed['unpay'][0] }}</td>
+            {% if unpay_or_payed['unpay'][0] !=0 %}
+            {% set pass_rate =(unpay_or_payed['unpay'][1])//(unpay_or_payed['unpay'][0]) %}
+            <td>{{pass_rate }}</td>
+            {% else %}
+            <td>0</td>
+            {% endif %}
+            <td>0</td>
+        </tr>
+        <tr>
+            <td>逾期已还</td>
+            <td>{{unpay_or_payed['payed'][1]}}</td>
+            <td>{{ unpay_or_payed['payed'][0] }}</td>
+            {% if unpay_or_payed['payed'][0] !=0 %}
+            {% set pass_rate =(unpay_or_payed['payed'][1])//(unpay_or_payed['payed'][0]) %}
+            <td>{{pass_rate }}</td>
+            {% else %}
+            <td>0</td>
+            {% endif %}
+            <td>0</td>
+        </tr>
+    </table>
+
+</div>
+
+{% endblock %}

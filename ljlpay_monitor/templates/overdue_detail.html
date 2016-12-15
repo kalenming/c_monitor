@@ -1,0 +1,36 @@
+{% extends "layout/layout.html" %}
+{% block tools %}
+{% include 'tools/timeControllerMonitor.html' %}
+{% endblock %}
+
+{% block body %}
+
+<div id='monitor_4' style="margin-top: 2%;">
+    <h6 align=middle style="font-size:18px"><b style="color: #FF4136">企业信息</b>详情</h6>
+    <table border="1" width="100%" style="margin-bottom: 20px;">
+
+        <tr align="center" style="font-size: 18px;color:#FFFFFF;background-color: #0044cc">
+            <th style="text-align:center">企业ID</th>
+            <th style="text-align:center">借款人</th>
+            <th style="text-align:center">逾期金额</th>
+            <th style="text-align:center">逾期时间</th>
+            <th style="text-align:center">逾期时长</th>
+
+
+
+        </tr>
+
+        <tr>
+            <td align="middle">{{ company_detail['enterprise_id'] }}</td>
+            <td align="middle">{{ company_detail['loan_user_name'] }}</td>
+            <td align="middle">{{ company_detail['loan_amount'] }}</td>
+            <td align="middle">{{ company_detail['overdue_time'] }}</td>
+            <td align="middle">{{ company_detail['overdue_timeout'] }}</td>
+
+
+        </tr>
+    </table>
+</div>
+
+
+{% endblock %}

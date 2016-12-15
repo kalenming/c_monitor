@@ -1,0 +1,162 @@
+{% extends "layout/layout.html" %}
+{% block tools %}
+{% include 'tools/timeControllerMonitor.html' %}
+{% endblock %}
+
+{% block body %}
+
+<div id='monitor_4' style="margin-top: 2%;">
+    <h6 align=middle style="font-size:18px"><b style="color: #FF4136">企业信息</b>详情</h6>
+    <table border="1" width="100%" style="margin-bottom: 20px;">
+
+        <tr align="center" style="font-size: 18px;color:#FFFFFF;background-color: #0044cc">
+            <th style="text-align:center">企业名称</th>
+            <th style="text-align:center">企业地址</th>
+            <th style="text-align:center">电商名称</th>
+            <th style="text-align:center">法人</th>
+            <th style="text-align:center">法人电话</th>
+            <th style="text-align:center">联系电话</th>
+            <th style="text-align:center">注册时间</th>
+
+
+        </tr>
+
+        <tr>
+            <td align="middle">{{ company_detail['companyName'] }}</td>
+            <td align="middle">{{ company_detail['businessAddress'] }}</td>
+            <td align="middle">{{ company_detail['businessName'] }}</td>
+            <td align="middle">{{ company_detail['legalPerson'] }}</td>
+            <td align="middle">{{ company_detail['legalPersonPhone'] }}</td>
+            <td align="middle">{{ company_detail['contactPhone'] }}</td>
+            <td align="middle">{{ company_detail['registrationDate'] }}</td>
+
+        </tr>
+    </table>
+</div>
+
+<div id='monitor_4' style="margin-top: 2%;">
+    <h6 align=middle style="font-size:18px"><b style="color: #FF4136">授信</b>详情</h6>
+    <table border="1" width="100%" style="margin-bottom: 20px;">
+
+        <tr align="center" style="font-size: 18px;color:#FFFFFF;background-color: #0044cc">
+            <th style="text-align:center">企业ID</th>
+            <th style="text-align:center">分值</th>
+            <th style="text-align:center">等级</th>
+            <th style="text-align:center">授信额度</th>
+            <th style="text-align:center">状态</th>
+
+
+        </tr>
+
+        <tr>
+            <td align="middle">{{ success_detail['user_id'] }}</td>
+            <td align="middle">{{ success_detail['score'] }}</td>
+            <td align="middle">{{ success_detail['credit_grade'] }}</td>
+            <td align="middle">{{ success_detail['suggest_credit_amount'] }}</td>
+            <td align="middle">{{ success_detail['state'] }}</td>
+
+        </tr>
+    </table>
+</div>
+
+<div id='monitor_5' style="margin-top: 2%;">
+    <h6 align=middle style="font-size:18px"><b style="color: #FF4136">授信</b>详情</h6>
+    <table border="1" width="100%" style="margin-bottom: 20px;">
+
+        <tr align="center" style="font-size: 18px;color:#FFFFFF;background-color: #0044cc">
+            <th style="text-align:center">注册资金</th>
+            <th style="text-align:center">法人年龄</th>
+            <th style="text-align:center">对外投资</th>
+            <th style="text-align:center">6个月交易平均值</th>
+            <th style="text-align:center">12交易时长</th>
+            <th style="text-align:center">6交易时长</th>
+            <th style="text-align:center">3交易时长</th>
+            <th style="text-align:center">规则</th>
+
+        </tr>
+
+        <tr>
+            <td align="middle">{{ features.get('reg_capital', 0) }}</td>
+            <td align="middle">{{ features.get('legal_age', 0) }}</td>
+            <td align="middle">{{ features.get('investment_en_count', 0) }}</td>
+            <td align="middle">{{ features.get('trade', {}).get('6_avg_amount', 0) }}</td>
+            <td align="middle">{{ features.get('trade', {}).get('12_true_trade_period', 0) }}</td>
+            <td align="middle">{{ features.get('trade', {}).get('6_true_trade_period', 0) }}</td>
+            <td align="middle">{{ features.get('trade', {}).get('3_true_trade_period', 0) }}</td>
+            <td align="middle">{{ features.get('rules', '') }}</td>
+
+        </tr>
+    </table>
+</div>
+<div id="period_detail" style="margin-top: 2%;">
+    <h6 align=middle style="font-size:18px"><b style="color: #FF4136">交易流水统计</b>详情</h6>
+    <table border="1" width="100%" style="margin-bottom: 20px;">
+        <tr style="font-size: 18px;color:#FFFFFF;background-color: #0044cc">
+            <th>时段</th>
+            <th>量(件)</th>
+            <th>金额(元)</th>
+            <th>次数</th>
+            <th>品类(种)</th>
+            <th>退货率(%)</th>
+        </tr>
+        {% if sys_purchase != {} %}
+            {% set row = sys_purchase.get('month') %}
+            {% if row != '' %}
+                <tr>
+                    <td> 0-30天 </td>
+                    <td> {{ row.get('goods_quantity')}}</td>
+                    <td> {{row.get('amount')}}</td>
+                    <td> {{row.get('order_count')}}</td>
+                    <td> {{row.get('goods_type')}}</td>
+                    <td> {{row.get('refund_rate')}}</td>
+                </tr>
+            {% endif %}
+            {% set row = sys_purchase.get('two_months') %}
+            {% if row != ''%}
+                <tr>
+                    <td> 0-60天 </td>
+                    <td> {{ row.get('goods_quantity')}}</td>
+                    <td> {{row.get('amount')}}</td>
+                    <td> {{row.get('order_count')}}</td>
+                    <td> {{row.get('goods_type')}}</td>
+                    <td> {{row.get('refund_rate')}}</td>
+                </tr>
+            {% endif %}
+            {% set row = sys_purchase.get('quarter_year') %}
+            {% if row != ''%}
+                <tr>
+                    <td> 0-90天 </td>
+                    <td> {{ row.get('goods_quantity')}}</td>
+                    <td> {{row.get('amount')}}</td>
+                    <td> {{row.get('order_count')}}</td>
+                    <td> {{row.get('goods_type')}}</td>
+                    <td> {{row.get('refund_rate')}}</td>
+                </tr>
+            {% endif %}
+            {% set row = sys_purchase.get('half_year') %}
+            {% if row != '' %}
+                <tr>
+                    <td> 0-180天 </td>
+                    <td> {{ row.get('goods_quantity')}}</td>
+                    <td> {{row.get('amount')}}</td>
+                    <td> {{row.get('order_count')}}</td>
+                    <td> {{row.get('goods_type')}}</td>
+                    <td> {{row.get('refund_rate')}}</td>
+                </tr>
+            {% endif %}
+            {% set row = sys_purchase.get('one_year') %}
+            {% if row != '' %}
+                <tr>
+                    <td> 0-360天 </td>
+                    <td> {{ row.get('goods_quantity')}}</td>
+                    <td> {{row.get('amount')}}</td>
+                    <td> {{row.get('order_count')}}</td>
+                    <td> {{row.get('goods_type')}}</td>
+                    <td> {{row.get('refund_rate')}}</td>
+                </tr>
+            {% endif %}
+        {% endif %}
+    </table>
+</div>
+
+{% endblock %}

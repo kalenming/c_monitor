@@ -1,0 +1,24 @@
+{% extends "tools/base/basepickController.html" %}
+
+{% block forTime %}
+{% include 'tools/base/timePicker.html' %}
+{% endblock %}
+
+{% block forJS %}
+<script>
+$(function() {
+  $("#Search").click(function(){
+    data_post =""
+    if($("#overdue_type").text().length>0)
+        data_post+= "day="+$("#overdue_type").text()+"&";
+    if($("#start_time").val().length>0)
+        data_post+= "begin="+ $("#start_time").val()+"&";
+    if($("#end_time").val().length>0)
+        data_post+= "end="+ $("#end_time").val();
+    url = "?"+data_post;
+    window.location.href=url;
+    });
+});
+
+</script>
+{% endblock %}

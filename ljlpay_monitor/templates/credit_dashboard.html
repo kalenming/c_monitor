@@ -1,0 +1,669 @@
+{% extends "layout/layout.html" %}
+{% block tools %}
+{% include 'tools/timeControllerMonitor.html' %}
+{% endblock %}
+
+{% block body %}
+<!--
+<div id= 'model_month_amount_tend' style ="width: 1200px;height:400px"></div>
+<script>
+    //基于准备好的dom,初始化echarts实例
+    var chart_ins = echarts.init(document.getElementById('model_month_amount_tend'));
+    var option ={
+
+        title:{text:'模型推送月授信额度趋势'},
+        tooltip:{},
+        legend: { data:['模型给出额度','推送额度'] },
+        xAxis: {
+        'name':'月份',
+        data: {{ month_data|safe }}['model_months']
+        },
+        yAxis: {
+        'name':'金额(万元)'
+        },
+        series: [
+            {
+                name:'模型给出额度',
+                type:'line',
+                data:{{ month_data|safe }}['model_amount'],
+                itemStyle: {
+                         normal: {
+                             label: {
+                                 show: true,//是否展示
+                                 textStyle: {
+                                     fontWeight:'bolder',
+                                     fontSize : '12',
+                                     fontFamily : '微软雅黑',
+                                 }
+                             }
+                         }
+                     }
+            },
+
+            {
+                name:'推送额度',
+                type:'line',
+                data:{{ month_data|safe }}['push_amount'],
+                itemStyle: {
+                         normal: {
+                             label: {
+                                 show: true,//是否展示
+                                 textStyle: {
+                                     fontWeight:'bolder',
+                                     fontSize : '12',
+                                     fontFamily : '微软雅黑',
+                                 }
+                             }
+                         }
+                     }
+            }
+
+
+        ]
+    };
+    //使用刚才的option配置和实例显示图表
+    chart_ins.setOption(option);
+</script>
+
+
+<div id= 'reg_month_amount_tend' style ="width: 1200px;height:400px"></div>
+<script>
+    //基于准备好的dom,初始化echarts实例
+    var chart_ins = echarts.init(document.getElementById('reg_month_amount_tend'));
+    var option ={
+        title:{text:'机构月授信额度趋势'},
+        tooltip:{},
+        legend: { data:['机构给出额度'] },
+        xAxis: {
+        'name':'月份',
+        data: {{ month_data|safe }}['reg_months']
+        },
+        yAxis: {
+        'name':'金额(万元)'
+        },
+        series: [
+         {
+                name:'机构给出额度',
+                type:'line',
+                data:{{ month_data|safe }}['reg_amount'],
+                itemStyle: {
+                         normal: {
+                             label: {
+                                 show: true,//是否展示
+                                 textStyle: {
+                                     fontWeight:'bolder',
+                                     fontSize : '12',
+                                     fontFamily : '微软雅黑',
+                                 }
+                             }
+                         }
+                     }
+            }
+
+        ]
+    };
+    //使用刚才的option配置和实例显示图表
+    chart_ins.setOption(option);
+</script>
+
+<div id= 'model_month_count_tend_pass' style ="width: 1200px;height:400px"></div>
+<script>
+    //基于准备好的dom,初始化echarts实例
+    var chart_ins = echarts.init(document.getElementById('model_month_count_tend_pass'));
+    var option ={
+        title:{text:'月授信成功用户数趋势'},
+        tooltip:{},
+        legend: { data:['模型通过'] },
+        xAxis: {
+        name:'月份',
+        data: {{ month_data|safe }}['model_months']
+        },
+        yAxis: {
+        'name':'用户数'
+        },
+        series: [
+
+             {
+                name:'模型通过',
+                type:'line',
+                data:{{ month_data|safe }}['model_pass'],
+                itemStyle: {
+                         normal: {
+                    ——         label: {
+                                 show: true,//是否展示
+                                 textStyle: {
+                                     fontWeight:'bolder',
+                                     fontSize : '12',
+                                     fontFamily : '微软雅黑',
+                                 }
+                             }
+                         }
+                     }
+            }
+
+        ]
+    };
+    //使用刚才的option配置和实例显示图表
+    chart_ins.setOption(option);
+</script>
+
+
+<div id= 'reg_month_count_tend_pass' style ="width: 1200px;height:400px"></div>
+<script>
+    //基于准备好的dom,初始化echarts实例
+    var chart_ins = echarts.init(document.getElementById('reg_month_count_tend_pass'));
+    var option ={
+        title:{text:'月授信成功用户数趋势'},
+        tooltip:{},
+        legend: { data:['机构通过'] },
+        xAxis: {
+        name:'月份',
+        data: {{ month_data|safe }}['reg_months']
+        },
+        yAxis: {
+        'name':'用户数'
+        },
+        series: [
+
+
+             {
+                name:'机构通过',
+                type:'line',
+                data:{{ month_data|safe }}['reg_pass'],
+                itemStyle: {
+                         normal: {
+                             label: {
+                                 show: true,//是否展示
+                                 textStyle: {
+                                     fontWeight:'bolder',
+                                     fontSize : '12',
+                                     fontFamily : '微软雅黑',
+                                 }
+                             }
+                         }
+                     }
+            }
+
+        ]
+    };
+    //使用刚才的option配置和实例显示图表
+    chart_ins.setOption(option);
+</script>
+
+<div id= 'model_month_count_tend_reject' style ="width: 1200px;height:400px"></div>
+<script >
+    //基于准备好的dom,初始化echarts实例
+    var chart_ins = echarts.init(document.getElementById('model_month_count_tend_reject'));
+    var option ={
+        title:{text:'月拒绝用户数趋势'},
+        tooltip:{},
+        legend: { data:['模型拒绝'] },
+        xAxis: {
+        name:'月份',
+        data: {{ month_data|safe }}['model_months']
+        },
+        yAxis: {
+        'name':'用户数'
+        },
+        series: [
+
+             {
+                name:'模型拒绝',
+                type:'line',
+                data:{{ month_data|safe }}['model_reject'],
+                itemStyle: {
+                         normal: {
+                             label: {
+                                 show: true,//是否展示
+                                 textStyle: {
+                                     fontWeight:'bolder',
+                                     fontSize : '12',
+                                     fontFamily : '微软雅黑',
+                                 }
+                             }
+                         }
+                     }
+
+            }
+
+        ]
+    };
+    //使用刚才的option配置和实例显示图表
+    chart_ins.setOption(option);
+</script>
+
+
+
+
+<div id= 'model_amount_dis' style ="width: 1200px;height:400px"></div>
+<script>
+    //基于准备好的dom,初始化echarts实例
+    var chart_ins = echarts.init(document.getElementById('model_amount_dis'));
+    var option ={
+        title:{text:['模型和推送额度分布']},
+        tooltip:{},
+        legend: { data:['模型额度','推送额度'] },
+        xAxis: {
+        name:'额度（万元）',
+        data:['[0-1)','[1-2)','[2-3)','[3-4)','[4-5)','[5-6)','[6-7)','[7-8)','[8-10)','10以上']},
+        yAxis: {
+        name:'用户数'
+        },
+        series: [
+            {
+                name:'模型额度',
+                type:'bar',
+                data:{{ limit|safe }}['model_amount'],
+                 itemStyle: {
+                         normal: {
+                             label: {
+                                 show: true,//是否展示
+                                 textStyle: {
+                                     fontWeight:'bolder',
+                                     fontSize : '12',
+                                     fontFamily : '微软雅黑',
+                                 }
+                             }
+                         }
+                     }
+            },
+
+            {
+                name:'推送额度',
+                type:'bar',
+                data:{{ limit|safe }}['revise_amount'],
+                itemStyle: {
+                         normal: {
+                             label: {
+                                 show: true,//是否展示
+                                 textStyle: {
+                                     fontWeight:'bolder',
+                                     fontSize : '12',
+                                     fontFamily : '微软雅黑',
+                                 }
+                             }
+                         }
+                     }
+            }
+
+        ]
+    };
+    //使用刚才的option配置和实例显示图表
+    chart_ins.setOption(option);
+</script>
+
+
+<div id= 'reg_amount_dis' style ="width: 1200px;height:400px"></div>
+<script>
+    //基于准备好的dom,初始化echarts实例
+    var chart_ins = echarts.init(document.getElementById('reg_amount_dis'));
+    var option ={
+        title:{text:'机构额度分布'},
+        tooltip:{},
+        legend: { data:['推送额度'] },
+        xAxis: {
+        name:'额度（万元）',
+
+        data: ['[0-1)','[1-2)','[2-3)','[3-4)','[4-5)','[5-6)','[6-7)','[7-8)','[8-10)','10以上']},
+        yAxis: {
+        name:'用户数'
+        },
+        series: [
+            {
+                name:'推送额度',
+                type:'bar',
+
+                data:{{ limit|safe }}['reg_amount'],
+
+             itemStyle: {
+                         normal: {
+                             label: {
+                                 show: true,//是否展示
+                                 textStyle: {
+                                     fontWeight:'bolder',
+                                     fontSize : '12',
+                                     fontFamily : '微软雅黑',
+                                 }
+                             }
+                         }
+                     }
+            }
+        ]
+    };
+    //使用刚才的option配置和实例显示图表
+    chart_ins.setOption(option);
+</script>
+
+
+<div id="suc_fail_table" style="margin:60px;width:1000px;float:left">
+    <table border="1" width="100%">
+        <tr style="font-size: 18px;color:#FFFFFF;background-color: #0044cc">
+            <th>模型通过用户</th>
+            <th>机构通过用户</th>
+            <th>模型授信金额</th>
+            <th>机构授信总额</th>
+            <th></th>
+        </tr>
+
+        <tr>
+            <td>{{pass_total[0]}}</td>
+            <td>{{pass_total[2]}}</td>
+            <td>{{pass_total[1]}}</td>
+            <td>{{pass_total[3]}}</td>
+        </tr>
+
+    </table>
+</div>
+-->
+
+
+<div id= 'model_month_amount_tend' style ="width: 1200px;height:400px"></div>
+<script>
+    //基于准备好的dom,初始化echarts实例
+    var chart_ins = echarts.init(document.getElementById('model_month_amount_tend'));
+    var option ={
+
+        title:{text:'模型推送月授信额度趋势'},
+        tooltip:{},
+        legend: { data:['模型给出额度','推送额度'] },
+        xAxis: {
+        'name':'月份',
+        data: ['2016-03','2016-04','2016-05','2016-06','2016-07','2016-08','2016-09','2016-10','2016-11']
+        },
+        yAxis: {
+        'name':'金额(元)'
+        },
+        series: [
+            {
+                name:'模型给出额度',
+                type:'line',
+                data:[202857,3465072,25470744,4682850,12089400,7176750,1830000,1834500,3549000],
+                itemStyle: {
+                         normal: {
+                             label: {
+                                 show: true,//是否展示
+                                 textStyle: {
+                                     fontWeight:'bolder',
+                                     fontSize : '12',
+                                     fontFamily : '微软雅黑',
+                                 }
+                             }
+                         }
+                     }
+            },
+
+            {
+                name:'推送额度',
+                type:'line',
+                data:[202857,3465072,25470744,4682850,12089400,7176750,1830000,1834500,3549000],
+                itemStyle: {
+                         normal: {
+                             label: {
+                                 show: true,//是否展示
+                                 textStyle: {
+                                     fontWeight:'bolder',
+                                     fontSize : '12',
+                                     fontFamily : '微软雅黑',
+                                 }
+                             }
+                         }
+                     }
+            }
+
+
+        ]
+    };
+    //使用刚才的option配置和实例显示图表
+    chart_ins.setOption(option);
+</script>
+
+<!--
+<div id= 'reg_month_amount_tend' style ="width: 1200px;height:400px"></div>
+<script>
+    //基于准备好的dom,初始化echarts实例
+    var chart_ins = echarts.init(document.getElementById('reg_month_amount_tend'));
+    var option ={
+        title:{text:'机构月授信额度趋势'},
+        tooltip:{},
+        legend: { data:['机构给出额度'] },
+        xAxis: {
+        'name':'月份',
+        data: ['2016-03','2016-04','2016-05','2016-06','2016-07','2016-08','2016-09','2016-10','2016-11']
+        },
+        yAxis: {
+        'name':'金额(元)'
+        },
+        series: [
+         {
+                name:'机构给出额度',
+                type:'line',
+                data:[202857,3465072,25470744,4682850,12089400,7176750,1830000,1834500,3549000],
+                itemStyle: {
+                         normal: {
+                             label: {
+                                 show: true,//是否展示
+                                 textStyle: {
+                                     fontWeight:'bolder',
+                                     fontSize : '12',
+                                     fontFamily : '微软雅黑',
+                                 }
+                             }
+                         }
+                     }
+            }
+
+        ]
+    };
+    //使用刚才的option配置和实例显示图表
+    chart_ins.setOption(option);
+</script>
+-->
+
+<div id= 'model_month_count_tend_pass' style ="width: 1200px;height:400px"></div>
+<script>
+    //基于准备好的dom,初始化echarts实例
+    var chart_ins = echarts.init(document.getElementById('model_month_count_tend_pass'));
+    var option ={
+        title:{text:'月授信成功用户数趋势'},
+        tooltip:{},
+        legend: { data:['模型通过'] },
+        xAxis: {
+        name:'月份',
+        data: ['2016-03','2016-04','2016-05','2016-06','2016-07','2016-08','2016-09','2016-10','2016-11']
+        },
+        yAxis: {
+        'name':'用户数'
+        },
+        series: [
+
+             {
+                name:'模型通过',
+                type:'line',
+                data:[15,51,117,99,213,201,162,93,126],
+                itemStyle: {
+                         normal: {
+                               label: {
+                                 show: true,//是否展示
+                                 textStyle: {
+                                     fontWeight:'bolder',
+                                     fontSize : '12',
+                                     fontFamily : '微软雅黑',
+                                 }
+                             }
+                         }
+                     }
+            }
+
+        ]
+    };
+    //使用刚才的option配置和实例显示图表
+    chart_ins.setOption(option);
+</script>
+
+<!--
+<div id= 'reg_month_count_tend_pass' style ="width: 1200px;height:400px"></div>
+<script>
+    //基于准备好的dom,初始化echarts实例
+    var chart_ins = echarts.init(document.getElementById('reg_month_count_tend_pass'));
+    var option ={
+        title:{text:'月授信成功用户数趋势'},
+        tooltip:{},
+        legend: { data:['机构通过'] },
+        xAxis: {
+        name:'月份',
+        data: ['2016-03','2016-04','2016-05','2016-06','2016-07','2016-08','2016-09','2016-10','2016-11']
+        },
+        yAxis: {
+        'name':'用户数'
+        },
+        series: [
+
+
+             {
+                name:'机构通过',
+                type:'line',
+                data:[15,51,117,99,213,201,162,93,126],
+                itemStyle: {
+                         normal: {
+                             label: {
+                                 show: true,//是否展示
+                                 textStyle: {
+                                     fontWeight:'bolder',
+                                     fontSize : '12',
+                                     fontFamily : '微软雅黑',
+                                 }
+                             }
+                         }
+                     }
+            }
+
+        ]
+    };
+    //使用刚才的option配置和实例显示图表
+    chart_ins.setOption(option);
+</script>
+-->
+
+
+<!--
+<div id= 'model_amount_dis' style ="width: 1200px;height:400px"></div>
+<script>
+    //基于准备好的dom,初始化echarts实例
+    var chart_ins = echarts.init(document.getElementById('model_amount_dis'));
+    var option ={
+        title:{text:['模型和推送额度分布']},
+        tooltip:{},
+        legend: { data:['模型额度','推送额度'] },
+        xAxis: {
+        name:'额度（万元）',
+        data:['[0-1)','[1-2)','[2-3)','[3-4)','[4-5)','[5-6)','[6-7)','[7-8)','[8-10)','10以上']},
+        yAxis: {
+        name:'用户数'
+        },
+        series: [
+            {
+                name:'模型额度',
+                type:'bar',
+                data:{{ limit|safe }}['model_amount'],
+                 itemStyle: {
+                         normal: {
+                             label: {
+                                 show: true,//是否展示
+                                 textStyle: {
+                                     fontWeight:'bolder',
+                                     fontSize : '12',
+                                     fontFamily : '微软雅黑',
+                                 }
+                             }
+                         }
+                     }
+            },
+
+            {
+                name:'推送额度',
+                type:'bar',
+                data:{{ limit|safe }}['revise_amount'],
+                itemStyle: {
+                         normal: {
+                             label: {
+                                 show: true,//是否展示
+                                 textStyle: {
+                                     fontWeight:'bolder',
+                                     fontSize : '12',
+                                     fontFamily : '微软雅黑',
+                                 }
+                             }
+                         }
+                     }
+            }
+
+        ]
+    };
+    //使用刚才的option配置和实例显示图表
+    chart_ins.setOption(option);
+</script>
+
+
+<div id= 'reg_amount_dis' style ="width: 1200px;height:400px"></div>
+<script>
+    //基于准备好的dom,初始化echarts实例
+    var chart_ins = echarts.init(document.getElementById('reg_amount_dis'));
+    var option ={
+        title:{text:'机构额度分布'},
+        tooltip:{},
+        legend: { data:['推送额度'] },
+        xAxis: {
+        name:'额度（万元）',
+
+        data: ['[0-1)','[1-2)','[2-3)','[3-4)','[4-5)','[5-6)','[6-7)','[7-8)','[8-10)','10以上']},
+        yAxis: {
+        name:'用户数'
+        },
+        series: [
+            {
+                name:'推送额度',
+                type:'bar',
+
+                data:{{ limit|safe }}['reg_amount'],
+
+             itemStyle: {
+                         normal: {
+                             label: {
+                                 show: true,//是否展示
+                                 textStyle: {
+                                     fontWeight:'bolder',
+                                     fontSize : '12',
+                                     fontFamily : '微软雅黑',
+                                 }
+                             }
+                         }
+                     }
+            }
+        ]
+    };
+    //使用刚才的option配置和实例显示图表
+    chart_ins.setOption(option);
+</script>
+-->
+<!--
+<div id="suc_fail_table" style="margin:60px;width:1000px;float:left">
+    <table border="1" width="100%">
+        <tr style="font-size: 18px;color:#FFFFFF;background-color: #0044cc">
+            <th>模型通过用户</th>
+            <th>机构通过用户</th>
+            <th>模型授信金额</th>
+            <th>机构授信总额</th>
+            <th></th>
+        </tr>
+
+        <tr>
+            <td>{{pass_total[0]}}</td>
+            <td>{{pass_total[2]}}</td>
+            <td>{{pass_total[1]}}</td>
+            <td>{{pass_total[3]}}</td>
+        </tr>
+
+    </table>
+</div>
+-->
+{% endblock %}

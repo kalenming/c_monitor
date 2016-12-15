@@ -1,0 +1,117 @@
+{% extends "layout/layout.html" %}
+{% block tools %}
+{% include 'tools/timeControllerMonitor.html' %}
+{% endblock %}
+
+{% block body %}
+<!--<li><a href="http://192.168.1.155:8080/weekly_report.pdf">pdf下载</a></li>-->
+
+<li><a href="http://123.57.217.164:6789/weekly_report.pdf">pdf下载</a></li>
+<div id='daily_total' style="margin-top: 2%;">
+    <h6 align=middle style="font-size:18px"><b style="color: #FF4136">本周进件</b>信息</h6>
+    <table border="1" width="100%" style="margin-bottom: 20px;">
+
+        <tr align="center" style="font-size: 18px;color:#FFFFFF;background-color: #0044cc">
+            <th style="text-align:center">本周新进数量</th>
+            <th style="text-align:center">本周审核数量</th>
+            <th style="text-align:center">本周审核通过</th>
+            <th style="text-align:center">本周审核拒绝</th>
+            <th style="text-align:center">本周逾期数量</th>
+        </tr>
+
+        <tr>
+            <td align="middle">{{ daily['collect']['new'] }}</td>
+            <td align="middle">{{ daily['collect']['checked'] }}</td>
+            <td align="middle">{{ daily['collect']['checkedPass'] }}</td>
+            <td align="middle">{{ daily['collect']['checkedReject'] }}</td>
+            <td align="middle">{{ daily['collect']['overdue'] }}</td>
+        </tr>
+    </table>
+</div>
+
+<div id='daily_checked_info_table' style="margin-top: 2%;">
+    <h6 align=middle style="font-size:18px"><b style="color: #FF4136">本周授信</b>信息表</h6>
+    <table border="1" width="100%" style="margin-bottom: 20px;">
+
+        <tr align="center" style="font-size: 18px;color:#FFFFFF;background-color: #0044cc">
+            <th style="text-align:center">企业名称</th>
+            <th style="text-align:center">模型等级</th>
+            <th style="text-align:center">推送等级</th>
+            <th style="text-align:center">模型额度</th>
+            <th style="text-align:center">推送额度</th>
+            <th style="text-align:center">状态标识</th>
+            <th style="text-align:center">时间</th>
+        </tr>
+        {% for tr in daily['checked_table'] %}
+        <tr>
+            <td align="middle">{{ tr['companyName'] }}</td>
+            <td align="middle">{{ tr['rcLevel'] }}</td>
+            <td align="middle">{{ tr['reviseRcLevel'] }}</td>
+            <td align="middle">{{ tr['highestAmount'] }}</td>
+            <td align="middle">{{ tr['reviseHighestAmount'] }}</td>
+            <td align="middle">{{ tr['state'] }}</td>
+            <td align="middle">{{ tr['time'] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+<div id='daily_overdue_info_table' style="margin-top: 2%;">
+    <h6 align=middle style="font-size:18px"><b style="color: #FF4136">本周逾期</b>信息表</h6>
+    <table border="1" width="100%" style="margin-bottom: 20px;">
+
+        <tr align="center" style="font-size: 18px;color:#FFFFFF;background-color: #0044cc">
+            <th style="text-align:center">企业名称</th>
+            <th style="text-align:center">逾期金额</th>
+            <th style="text-align:center">电商平台</th>
+            <th style="text-align:center">模型额度</th>
+            <th style="text-align:center">推送额度</th>
+            <th style="text-align:center">机构额度</th>
+            <th style="text-align:center">时间</th>
+        </tr>
+        {% for tr in daily['overdue_table'] %}
+        <tr>
+            <td align="middle">{{ tr['companyName'] }}</td>
+            <td align="middle">{{ tr['loan_amount'] }}</td>
+            <td align="middle">{{ tr['businessName'] }}</td>
+            <td align="middle">{{ tr['highestAmount'] }}</td>
+            <td align="middle">{{ tr['reviseHighestAmount'] }}</td>
+            <td align="middle">{{ tr['credit'] }}</td>
+            <td align="middle">{{ tr['time'] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+<div id='checked_daily_flow' style="margin-top: 2%;">
+    {% for tb in daily['checked_table'] %}
+        <table border="1" width="100%" style="margin-bottom: 20px;">
+            <caption>{{ tb['companyName'] }}</caption>
+            <tr style="font-size: 18px;color:#FFFFFF;background-color: #0044cc">
+                <th>时段</th>
+                <th>量(件)</th>
+                <th>金额(元)</th>
+                <th>次数</th>
+                <th>品类(种)</th>
+                <th>退货率(%)</th>
+            </tr>
+            {% if tb['trade_flow'] %}
+                {% set keys = ['month','two_months','quarter_year','half_year','one_year'] %}
+                {% for key in keys %}
+                    {% set period_flow = tb['trade_flow'].get(key,0) %}
+                    {% if period_flow %}
+                        <tr>
+                            <td>{{key}}</td>
+                            <td>{{period_flow['goods_quantity']}}</td>
+                            <td>{{period_flow['amount']}}</td>
+                            <td>{{period_flow['order_count']}}</td>
+                            <td>{{period_flow['goods_type']}}</td>
+                            <td>{{period_flow['refund_rate']}}</td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        </table>
+    {% endfor %}
+</div>
+
+{% endblock %}

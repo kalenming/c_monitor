@@ -1,0 +1,69 @@
+{% extends "layout/layout.html" %}
+{% block tools %}
+{% include 'tools/timeControllerMonitor.html' %}
+{% endblock %}
+
+{% block body %}
+
+<div id='unpay_detail_table' style="margin-top: 2%;">
+    <h6 align=middle style="font-size:18px"><b style="color: #FF4136">逾期未还</b>详情</h6>
+    <table border="1" width="100%" style="margin-bottom: 20px;">
+
+        <tr align="center" style="font-size: 18px;color:#FFFFFF;background-color: #0044cc">
+            <th style="text-align:center">序号</th>
+            <th style="text-align:center">企业ID</th>
+            <th style="text-align:center">借款人</th>
+            <th style="text-align:center">欠款金额</th>
+            <th style="text-align:center">时间</th>
+            <th style="text-align:center">时长</th>
+            <th style="text-align:center">详情</th>
+
+        </tr>
+        {% for item in unpay_detail %}
+        <tr>
+            <td align="middle">{{ loop.index }}</td>
+            <td align="middle">{{ item['enterprise_id'] }}</td>
+            <td align="middle">{{ item['loan_user_name'] }}</td>
+            <td align="middle">{{ item['loan_amount'] }}</td>
+            <td align="middle">{{ item['overdue_time'] }}</td>
+            <td align="middle">{{ item['overdue_timeout'] }}</td>
+            <td align="middle"><a
+                    href="./overdue_detail/{{item['enterprise_id']}}"
+                    target="_blank">...</a></td>
+
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+<div id='payed_detail_table' style="margin-top: 2%;">
+    <h6 align=middle style="font-size:18px"><b style="color: #FF4136">逾期已还</b>详情</h6>
+    <table border="1" width="100%" style="margin-bottom: 20px;">
+
+        <tr align="center" style="font-size: 18px;color:#FFFFFF;background-color: #0044cc">
+            <th style="text-align:center">序号</th>
+            <th style="text-align:center">企业ID</th>
+            <th style="text-align:center">借款人</th>
+            <th style="text-align:center">欠款金额</th>
+            <th style="text-align:center">时间</th>
+            <th style="text-align:center">时长</th>
+            <th style="text-align:center">详情</th>
+
+        </tr>
+        {% for item in payed_detail %}
+        <tr>
+            <td align="middle">{{ loop.index }}</td>
+            <td align="middle">{{ item['enterprise_idid'] }}</td>
+            <td align="middle">{{ item['loan_user_name'] }}</td>
+            <td align="middle">{{ item['loan_amount'] }}</td>
+            <td align="middle">{{ item['overdue_time'] }}</td>
+            <td align="middle">{{ item['overdue_timeout'] }}</td>
+            <td align="middle"><a
+                    href="./overdue_detail/{{item['enterprise_id']}}"
+                    target="_blank">...</a></td>
+
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

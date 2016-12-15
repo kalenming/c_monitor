@@ -1,0 +1,417 @@
+{% extends "layout/layout.html" %}
+{% block tools %}
+{% include 'tools/timeControllerMonitor.html' %}
+{% endblock %}
+
+{% block body %}
+
+
+<!--
+<div id= 'loan_month_amount_tend' style ="width: 1200px;height:400px"></div>
+<script>
+    //基于准备好的dom,初始化echarts实例
+    var chart_ins = echarts.init(document.getElementById('loan_month_amount_tend'));
+    var option ={
+        title:{text:'月贷款金额趋势'},
+        tooltip:{},
+        legend: { data:['贷款金额'] },
+        xAxis: {
+        'name':'月份',
+        data: {{ result|safe }}['per_month_amount']['months']
+        },
+        yAxis: {
+        'name':'金额(元)'
+        },
+        series: [
+         {
+                name:'贷款金额',
+                type:'line',
+                data:{{ result|safe }}['per_month_amount']['amount'],
+                 itemStyle: {
+                         normal: {
+                             label: {
+                                 show: true,//是否展示
+                                 textStyle: {
+                                     fontWeight:'bolder',
+                                     fontSize : '12',
+                                     fontFamily : '微软雅黑',
+                                 }
+                             }
+                         }
+                     }
+            }
+
+        ]
+    };
+    //使用刚才的option配置和实例显示图表
+    chart_ins.setOption(option);
+</script>
+
+
+
+<div id= 'loan_month_count_tend' style ="width: 1200px;height:400px"></div>
+<script>
+    //基于准备好的dom,初始化echarts实例
+    var chart_ins = echarts.init(document.getElementById('loan_month_count_tend'));
+    var option ={
+        title:{text:'月贷款次数趋势'},
+        tooltip:{},
+        legend: { data:['贷款次数'] },
+        xAxis: {
+        'name':'月份',
+        data: {{ result|safe }}['per_month_count']['months']
+        },
+        yAxis: {
+        'name':'次数'
+        },
+        series: [
+         {
+                name:'贷款次数',
+                type:'line',
+                data:{{ result|safe }}['per_month_count']['counts'],
+                 itemStyle: {
+                         normal: {
+                             label: {
+                                 show: true,//是否展示
+                                 textStyle: {
+                                     fontWeight:'bolder',
+                                     fontSize : '12',
+                                     fontFamily : '微软雅黑',
+                                 }
+                             }
+                         }
+                     }
+            }
+
+        ]
+    };
+    //使用刚才的option配置和实例显示图表
+    chart_ins.setOption(option);
+</script>
+
+<div id= 'loan_amount_dis' style ="width: 1200px;height:400px"></div>
+<script>
+    //基于准备好的dom,初始化echarts实例
+    var chart_ins = echarts.init(document.getElementById('loan_amount_dis'));
+    var option ={
+        title:{text:'贷款额度相对频次分布'},
+        tooltip:{},
+        legend: { data:['百分比'] },
+        xAxis: {
+        'name':'额度（百元）',
+        data: {{ result|safe }}['loan_amount_dis']['amount_interval']
+        },
+        yAxis: {
+        'name':'次数占比（%）'
+        },
+        series: [
+         {
+                name:'百分比',
+                type:'line',
+                data:{{ result|safe }}['loan_amount_dis']['amount_counts'],
+                 itemStyle: {
+                         normal: {
+                             label: {
+                                 show: true,//是否展示
+                                 textStyle: {
+                                     fontWeight:'bolder',
+                                     fontSize : '12',
+                                     fontFamily : '微软雅黑',
+                                 }
+                             }
+                         }
+                     }
+            }
+
+        ]
+    };
+    //使用刚才的option配置和实例显示图表
+    chart_ins.setOption(option);
+</script>
+
+
+<div id= 'total_amount_dis' style ="width: 1200px;height:400px"></div>
+<script>
+    //基于准备好的dom,初始化echarts实例
+    var chart_ins = echarts.init(document.getElementById('total_amount_dis'));
+    var option ={
+        title:{text:'用户贷款总额度分布'},
+        tooltip:{},
+        legend: { data:['百分比'] },
+        xAxis: {
+        'name':'额度（千元）',
+        data: {{ result|safe }}['total_amount_dis']['amount_interval']
+        },
+        yAxis: {
+        'name':'贷款金额占比（%）'
+        },
+        series: [
+         {
+                name:'百分比',
+                type:'line',
+                data:{{ result|safe }}['total_amount_dis']['amount_counts'],
+                 itemStyle: {
+                         normal: {
+                             label: {
+                                 show: true,//是否展示
+                                 textStyle: {
+                                     fontWeight:'bolder',
+                                     fontSize : '12',
+                                     fontFamily : '微软雅黑',
+                                 }
+                             }
+                         }
+                     }
+            }
+
+        ]
+    };
+    //使用刚才的option配置和实例显示图表
+    chart_ins.setOption(option);
+</script>
+
+
+
+
+<div id= 'loan_len_relation' style ="width: 1200px;height:400px"></div>
+<script>
+    //基于准备好的dom,初始化echarts实例
+    var chart_ins = echarts.init(document.getElementById('loan_len_relation'));
+    var option ={
+        title:{text:'授信时长与贷款总额度散点图'},
+        tooltip:{},
+        legend: { data:['时长：额度'] },
+        xAxis: {
+        'name':'授信时长',
+        data: {{ result|safe }}['loan_len_relation']['time_length']
+        },
+        yAxis: {
+        'name':'贷款额度'
+        },
+        series: [
+         {
+                name:'时长：额度',
+                type:'scatter',
+                data:{{ result|safe }}['loan_len_relation']['loan_amount']
+            }
+
+        ]
+    };
+    //使用刚才的option配置和实例显示图表
+    chart_ins.setOption(option);
+</script>
+
+
+<div id="total_count_amount_table" style="margin:60px;width:1000px;float:left">
+    <table border="1" width="100%">
+        <tr style="font-size: 18px;color:#FFFFFF;background-color: #0044cc">
+            <th>总贷款次数</th>
+            <th>总贷款金额</th>
+
+        </tr>
+
+        <tr>
+            <td>{{result['total_count']}}</td>
+            <td>{{result['total_amount']}}</td>
+        </tr>
+
+    </table>
+</div>
+-->
+
+<div id= 'loan_month_amount_tend' style ="width: 1200px;height:400px"></div>
+<script>
+    //基于准备好的dom,初始化echarts实例
+    var chart_ins = echarts.init(document.getElementById('loan_month_amount_tend'));
+    var option ={
+        title:{text:'月贷款金额趋势'},
+        tooltip:{},
+        legend: { data:['贷款金额'] },
+        xAxis: {
+        'name':'月份',
+        data: ['2016-03','2016-04','2016-05','2016-06','2016-07','2016-08','2016-09','2016-10','2016-11']
+        },
+        yAxis: {
+        'name':'金额(元)'
+        },
+        series: [
+         {
+                name:'贷款金额',
+                type:'line',
+                data:[11590.59,318488.1,6225313.2,5669575.02,11272125.96,13927218.48,5907901.92,16502131.41,25296967.26],
+                 itemStyle: {
+                         normal: {
+                             label: {
+                                 show: true,//是否展示
+                                 textStyle: {
+                                     fontWeight:'bolder',
+                                     fontSize : '12',
+                                     fontFamily : '微软雅黑',
+                                 }
+                             }
+                         }
+                     }
+            }
+
+        ]
+    };
+    //使用刚才的option配置和实例显示图表
+    chart_ins.setOption(option);
+</script>
+
+
+
+<div id= 'loan_month_count_tend' style ="width: 1200px;height:400px"></div>
+<script>
+    //基于准备好的dom,初始化echarts实例
+    var chart_ins = echarts.init(document.getElementById('loan_month_count_tend'));
+    var option ={
+        title:{text:'月贷款次数趋势'},
+        tooltip:{},
+        legend: { data:['贷款次数'] },
+        xAxis: {
+        'name':'月份',
+        data: ['2016-03','2016-04','2016-05','2016-06','2016-07','2016-08','2016-09','2016-10','2016-11']
+        },
+        yAxis: {
+        'name':'次数'
+        },
+        series: [
+         {
+                name:'贷款次数',
+                type:'line',
+                data:[75,198,663,1206,2031,3006,2682,2898,2592],
+                 itemStyle: {
+                         normal: {
+                             label: {
+                                 show: true,//是否展示
+                                 textStyle: {
+                                     fontWeight:'bolder',
+                                     fontSize : '12',
+                                     fontFamily : '微软雅黑',
+                                 }
+                             }
+                         }
+                     }
+            }
+
+        ]
+    };
+    //使用刚才的option配置和实例显示图表
+    chart_ins.setOption(option);
+</script>
+
+<div id= 'loan_amount_dis' style ="width: 1200px;height:400px"></div>
+<script>
+    //基于准备好的dom,初始化echarts实例
+    var chart_ins = echarts.init(document.getElementById('loan_amount_dis'));
+    var option ={
+        title:{text:'贷款额度相对频次分布'},
+        tooltip:{},
+        legend: { data:['百分比'] },
+        xAxis: {
+        'name':'额度（百元）',
+        data: {{ result|safe }}['loan_amount_dis']['amount_interval']
+        },
+        yAxis: {
+        'name':'次数占比（%）'
+        },
+        series: [
+         {
+                name:'百分比',
+                type:'line',
+                data:{{ result|safe }}['loan_amount_dis']['amount_counts'],
+                 itemStyle: {
+                         normal: {
+                             label: {
+                                 show: true,//是否展示
+                                 textStyle: {
+                                     fontWeight:'bolder',
+                                     fontSize : '12',
+                                     fontFamily : '微软雅黑',
+                                 }
+                             }
+                         }
+                     }
+            }
+
+        ]
+    };
+    //使用刚才的option配置和实例显示图表
+    chart_ins.setOption(option);
+</script>
+
+
+<div id= 'total_amount_dis' style ="width: 1200px;height:400px"></div>
+<script>
+    //基于准备好的dom,初始化echarts实例
+    var chart_ins = echarts.init(document.getElementById('total_amount_dis'));
+    var option ={
+        title:{text:'用户贷款总额度分布'},
+        tooltip:{},
+        legend: { data:['百分比'] },
+        xAxis: {
+        'name':'额度（千元）',
+        data: {{ result|safe }}['total_amount_dis']['amount_interval']
+        },
+        yAxis: {
+        'name':'贷款金额占比（%）'
+        },
+        series: [
+         {
+                name:'百分比',
+                type:'line',
+                data:{{ result|safe }}['total_amount_dis']['amount_counts'],
+                 itemStyle: {
+                         normal: {
+                             label: {
+                                 show: true,//是否展示
+                                 textStyle: {
+                                     fontWeight:'bolder',
+                                     fontSize : '12',
+                                     fontFamily : '微软雅黑',
+                                 }
+                             }
+                         }
+                     }
+            }
+
+        ]
+    };
+    //使用刚才的option配置和实例显示图表
+    chart_ins.setOption(option);
+</script>
+
+
+
+
+<div id= 'loan_len_relation' style ="width: 1200px;height:400px"></div>
+<script>
+    //基于准备好的dom,初始化echarts实例
+    var chart_ins = echarts.init(document.getElementById('loan_len_relation'));
+    var option ={
+        title:{text:'授信时长与贷款总额度散点图'},
+        tooltip:{},
+        legend: { data:['时长：额度'] },
+        xAxis: {
+        'name':'授信时长',
+        data: {{ result|safe }}['loan_len_relation']['time_length']
+        },
+        yAxis: {
+        'name':'贷款额度'
+        },
+        series: [
+         {
+                name:'时长：额度',
+                type:'scatter',
+                data:{{ result|safe }}['loan_len_relation']['loan_amount']
+            }
+
+        ]
+    };
+    //使用刚才的option配置和实例显示图表
+    chart_ins.setOption(option);
+</script>
+
+
+{% endblock %}

@@ -1,0 +1,17 @@
+{% include 'layout/header.html' %}
+<body>
+<!--<h2 align="middle">{{title}}后台监控</h2>-->
+
+<div class="container">
+    {% include 'layout/Nav.html' %}
+
+    {% block tools %}{% endblock %}
+
+    {% block body %}{% endblock %}
+
+</div>
+<div>
+	<img src="static/images/top_bg.png" alt="" title="回到顶部" class="scrollToTop" style="opacity: 0;">
+</div>
+
+{% include 'layout/footer.html' %}
